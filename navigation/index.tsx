@@ -16,6 +16,8 @@ import StoreList from '../screens/StoreList';
 import CartScreen from '../screens/CartScreen';
 import { RootStackParamList, RootTabParamList } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
+import PurchaseHistory from '../screens/PurchaseHistory';
+import PaymentScreen from '../screens/PaymentScreen';
 
 /**
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
@@ -65,6 +67,22 @@ function BottomTabNavigator() {
           ),
         }}
       />
+      <BottomTab.Screen
+        name="PurchaseHistory"
+        component={PurchaseHistory}
+        options={{
+          title: 'Histórico',
+          tabBarIcon: ({ color }) => <TabBarIcon name="folder-open" color={color} />,
+          headerRight: () => (
+            <Image
+              source={require('../assets/images/SW-Logo.png')}
+              name="Logo"
+              style={{ width: 60, height: 60, marginRight: 15 }}
+              resizeMode="contain"
+            />
+          ),
+        }}
+      />
     </BottomTab.Navigator>
   );
 }
@@ -79,6 +97,8 @@ function RootNavigator() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
+
+      <Stack.Screen name="Pagamento" component={PaymentScreen} />
     </Stack.Navigator>
   );
 }

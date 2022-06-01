@@ -9,6 +9,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
+  Pagamento: NavigatorScreenParams<RootTabParamList> | undefined;
 };
 declare global {
   namespace ReactNavigation {
@@ -19,6 +20,7 @@ declare global {
 export type RootTabParamList = {
   StoreList: undefined;
   CartScreen: undefined;
+  PurchaseHistory: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<

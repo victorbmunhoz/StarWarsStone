@@ -17,16 +17,22 @@ const linking: LinkingOptions<RootStackParamList> = {
         screens: {
           StoreList: {
             screens: {
-              StoreList: 'one',
+              StoreList: 'store',
             },
           },
           CartScreen: {
             screens: {
-              CartScreen: 'two',
+              CartScreen: 'cart',
+            },
+          },
+          PurchaseHistory: {
+            screens: {
+              PurchaseHistory: 'history',
             },
           },
         },
       },
+      Pagamento: 'payment',
     },
   },
 };

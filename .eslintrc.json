@@ -23,6 +23,7 @@
         "react/jsx-filename-extension": "off",
         "import/extensions": "off",
         "import/no-unresolved": "off",
-        "no-use-before-define": ["warn", { "functions": true, "classes": true, "variables": true }]
+        "no-use-before-define": ["off", { "functions": true, "classes": true, "variables": true }],
+        "react/destructuring-assignment": "off"
     }
 }
