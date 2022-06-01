@@ -14,16 +14,58 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import StoreList from '../screens/StoreList';
 import CartScreen from '../screens/CartScreen';
-import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
+import { RootStackParamList, RootTabParamList } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 
-export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
+/**
+ * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
+ * https://reactnavigation.org/docs/bottom-tab-navigator
+ */
+const BottomTab = createBottomTabNavigator<RootTabParamList>();
+
+function BottomTabNavigator() {
+  const colorScheme = useColorScheme();
+
   return (
-    <NavigationContainer
-      linking={LinkingConfiguration}
-      theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <RootNavigator />
-    </NavigationContainer>
+    <BottomTab.Navigator
+      initialRouteName="StoreList"
+      screenOptions={{
+        tabBarActiveTintColor: Colors[colorScheme].tint,
+      }}
+    >
+      <BottomTab.Screen
+        name="StoreList"
+        component={StoreList}
+        options={() => ({
+          title: 'Loja',
+          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+          headerRight: () => (
+            <Image
+              source={require('../assets/images/SW-Logo.png')}
+              name="Logo"
+              style={{ width: 60, height: 60, marginRight: 15 }}
+              resizeMode="contain"
+            />
+          ),
+        })}
+      />
+      <BottomTab.Screen
+        name="CartScreen"
+        component={CartScreen}
+        options={{
+          title: 'Carrinho',
+          tabBarIcon: ({ color }) => <TabBarIcon name="shopping-cart" color={color} />,
+          headerRight: () => (
+            <Image
+              source={require('../assets/images/SW-Logo.png')}
+              name="Logo"
+              style={{ width: 60, height: 60, marginRight: 15 }}
+              resizeMode="contain"
+            />
+          ),
+        }}
+      />
+    </BottomTab.Navigator>
   );
 }
 
@@ -41,54 +83,14 @@ function RootNavigator() {
   );
 }
 
-/**
- * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
- * https://reactnavigation.org/docs/bottom-tab-navigator
- */
-const BottomTab = createBottomTabNavigator<RootTabParamList>();
-
-function BottomTabNavigator() {
-  const colorScheme = useColorScheme();
-
+export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
-    <BottomTab.Navigator
-      initialRouteName="Loja"
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme].tint,
-      }}>
-      <BottomTab.Screen
-        name="Loja"
-        component={StoreList}
-        options={({ navigation }: RootTabScreenProps<'Loja'>) => ({
-          title: 'Loja',
-          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
-          headerRight: () => (
-            <Image 
-              source={require('../assets/images/SW-Logo.png')}
-              name="Logo"
-              style={{width: 60, height: 60, marginRight: 15}}
-              resizeMode="contain"
-            />
-          ),
-        })}
-      />
-      <BottomTab.Screen
-        name="Carrinho"
-        component={CartScreen}
-        options={{
-          title: 'Carrinho',
-          tabBarIcon: ({ color }) => <TabBarIcon name="shopping-cart" color={color} />,
-          headerRight: () => (
-            <Image 
-              source={require('../assets/images/SW-Logo.png')}
-              name="Logo"
-              style={{width: 60, height: 60, marginRight: 15}}
-              resizeMode="contain"
-            />
-          ),
-        }}
-      />
-    </BottomTab.Navigator>
+    <NavigationContainer
+      linking={LinkingConfiguration}
+      theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
+    >
+      <RootNavigator />
+    </NavigationContainer>
   );
 }
 
