@@ -25,11 +25,6 @@ const linking: LinkingOptions<RootStackParamList> = {
               CartScreen: 'cart',
             },
           },
-          PurchaseHistory: {
-            screens: {
-              PurchaseHistory: 'history',
-            },
-          },
         },
       },
       Pagamento: 'payment',

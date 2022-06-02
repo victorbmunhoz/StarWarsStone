@@ -28,6 +28,7 @@ export default function PaymentScreen({ navigation }:any) {
   }
 
   return (
+    // eslint-disable-next-line react/jsx-props-no-spreading
     <FormProvider {...formMethods}>
       <SafeAreaView style={styles.container}>
         <KeyboardAvoidingView

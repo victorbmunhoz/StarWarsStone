@@ -12,16 +12,17 @@ interface Product {
     seller: string,
     thumbnailHd: string,
     date: string,
-  }
-  // eslint-disable-next-line react/require-default-props
-  shop?: boolean
+  },
+  navigation: any,
 }
 
-export default function StoreCard({ product, shop }: Product) {
+export default function StoreCard({ product, navigation }: Product) {
   const openAlert = () => {
     // eslint-disable-next-line no-alert
     Alert.alert(`${product.title} adicionado ao carrinho`);
+    setTimeout(() => navigation.navigate('CartScreen'), 2000);
   };
+
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={{ uri: product.thumbnailHd }} resizeMode="contain" />
@@ -40,12 +41,9 @@ export default function StoreCard({ product, shop }: Product) {
           ,00
         </Text>
 
-        { shop
-          ? (
-            <TouchableOpacity style={styles.button} onPress={openAlert}>
-              <Text style={styles.buttonText}>COMPRAR</Text>
-            </TouchableOpacity>
-          ) : null }
+        <TouchableOpacity style={styles.button} onPress={openAlert}>
+          <Text style={styles.buttonText}>COMPRAR</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
