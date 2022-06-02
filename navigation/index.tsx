@@ -7,7 +7,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import * as React from 'react';
+import React from 'react';
 import { ColorSchemeName, Image } from 'react-native';
 
 import Colors from '../constants/Colors';
@@ -16,7 +16,6 @@ import StoreList from '../screens/StoreList';
 import CartScreen from '../screens/CartScreen';
 import { RootStackParamList, RootTabParamList } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
-import PurchaseHistory from '../screens/PurchaseHistory';
 import PaymentScreen from '../screens/PaymentScreen';
 
 /**
@@ -57,22 +56,6 @@ function BottomTabNavigator() {
         options={{
           title: 'Carrinho',
           tabBarIcon: ({ color }) => <TabBarIcon name="shopping-cart" color={color} />,
-          headerRight: () => (
-            <Image
-              source={require('../assets/images/SW-Logo.png')}
-              name="Logo"
-              style={{ width: 60, height: 60, marginRight: 15 }}
-              resizeMode="contain"
-            />
-          ),
-        }}
-      />
-      <BottomTab.Screen
-        name="PurchaseHistory"
-        component={PurchaseHistory}
-        options={{
-          title: 'Histórico',
-          tabBarIcon: ({ color }) => <TabBarIcon name="folder-open" color={color} />,
           headerRight: () => (
             <Image
               source={require('../assets/images/SW-Logo.png')}

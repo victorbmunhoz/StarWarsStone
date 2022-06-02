@@ -3,7 +3,7 @@ import { StyleSheet, FlatList } from 'react-native';
 import { Text, View } from '../components/Themed';
 import StoreCard from '../components/StoreCard';
 
-export default function StoreList() {
+export default function StoreList({ navigation }:any) {
   const data = [{
     title: 'Blusa do Imperio',
     price: 7990,
@@ -76,7 +76,7 @@ export default function StoreList() {
       <FlatList
         data={data}
         style={styles.productList}
-        renderItem={({ item }) => <StoreCard product={item} shop />}
+        renderItem={({ item }) => <StoreCard product={item} navigation={navigation} />}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       />

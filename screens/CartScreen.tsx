@@ -52,7 +52,7 @@ export default function CartScreen({ navigation }:any) {
           />
 
           <TouchableOpacity style={styles.buttonBack} onPress={() => navigation.navigate('StoreList')}>
-            <Text style={styles.buttonText}>Remover Todos</Text>
+            <Text style={styles.buttonBackText}>Remover Todos</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Pagamento')}>
@@ -110,13 +110,13 @@ const styles = StyleSheet.create({
   },
   buttonBack: {
     alignItems: 'center',
-    backgroundColor: '#fff',
     padding: 10,
     width: 350,
     borderRadius: 20,
     marginTop: 10,
-    borderWidth: 3,
-    borderStyle: 'dashed',
-    borderColor: '#ffe81f',
+  },
+  buttonBackText: {
+    color: '#fff',
+    fontSize: 18,
   },
 });
