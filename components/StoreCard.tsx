@@ -2,7 +2,9 @@ import React from 'react';
 import {
   StyleSheet, Image, View, TouchableOpacity, Alert,
 } from 'react-native';
+import { useDispatch } from 'react-redux';
 import { Text } from './Themed';
+import { addToCart } from '../redux/productsSlice';
 
 interface Product {
   product: {
@@ -17,9 +19,10 @@ interface Product {
 }
 
 export default function StoreCard({ product, navigation }: Product) {
+  const dispatch = useDispatch();
   const openAlert = () => {
     // eslint-disable-next-line no-alert
-    Alert.alert(`${product.title} adicionado ao carrinho`);
+    Alert.alert(`${product.title} adicionado ao carrinho!`);
     setTimeout(() => navigation.navigate('CartScreen'), 2000);
   };
 
@@ -41,7 +44,10 @@ export default function StoreCard({ product, navigation }: Product) {
           ,00
         </Text>
 
-        <TouchableOpacity style={styles.button} onPress={openAlert}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => { openAlert(); dispatch(addToCart(product.title)); }}
+        >
           <Text style={styles.buttonText}>COMPRAR</Text>
         </TouchableOpacity>
       </View>

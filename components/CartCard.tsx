@@ -33,18 +33,6 @@ export default function CartCard({ product }: Product) {
         </View>
 
         <View style={styles.cardBottom}>
-          <View style={styles.quantity}>
-            <TouchableOpacity onPress={() => {}}>
-              <FontAwesome name="minus-circle" size={24} color="black" />
-            </TouchableOpacity>
-            <Text style={styles.quantityText}>
-              Qntd: 1
-            </Text>
-            <TouchableOpacity onPress={() => {}}>
-              <FontAwesome name="plus-circle" size={24} color="black" />
-            </TouchableOpacity>
-          </View>
-
           <TouchableOpacity onPress={() => {}}>
             <FontAwesome name="trash" size={32} color="black" />
           </TouchableOpacity>
