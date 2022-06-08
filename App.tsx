@@ -2,18 +2,26 @@ import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import React from 'react';
 import { Provider } from 'react-redux';
-import store from './store';
-import useCachedResources from './hooks/useCachedResources';
+import { configureStore } from '@reduxjs/toolkit';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
+import cartSlice, { getTotal } from './redux/cartSlice';
+import productsSlice from './redux/productsSlice';
+
+const store = configureStore({
+  reducer: {
+    products: productsSlice,
+    cart: cartSlice,
+  },
+});
+
+// store.dispatch(productFetch());
+
+store.dispatch(getTotal());
 
 export default function App() {
-  const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
 
-  if (!isLoadingComplete) {
-    return null;
-  }
   return (
     <Provider store={store}>
       <SafeAreaProvider>

@@ -3,9 +3,11 @@ import {
   StyleSheet, Image, View, TouchableOpacity,
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
+import { useDispatch } from 'react-redux';
 import { Text } from './Themed';
+import { addToCart, removeFromCart, decreaseCart } from '../redux/cartSlice';
 
-interface Product {
+interface CartCardProps {
   product: {
     title: string,
     price: number,
@@ -13,10 +15,34 @@ interface Product {
     seller: string,
     thumbnailHd: string,
     date: string,
+    cartQuantity: number,
   }
 }
 
-export default function CartCard({ product }: Product) {
+interface Product {
+  title: string,
+  price: number,
+  zipcode: string,
+  seller: string,
+  thumbnailHd: string,
+  date: string,
+}
+
+export default function CartCard({ product }: CartCardProps) {
+  const dispatch = useDispatch();
+
+  const handleRemoveFromCart = (item: Product) => {
+    dispatch(removeFromCart(item));
+  };
+
+  const handleAddToCart = (item: Product) => {
+    dispatch(addToCart(item));
+  };
+
+  const handleDecrease = (item: Product) => {
+    dispatch(decreaseCart(item));
+  };
+
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={{ uri: product.thumbnailHd }} resizeMode="contain" />
@@ -33,7 +59,21 @@ export default function CartCard({ product }: Product) {
         </View>
 
         <View style={styles.cardBottom}>
-          <TouchableOpacity onPress={() => {}}>
+          <View style={styles.quantity}>
+            <TouchableOpacity onPress={() => handleDecrease(product)}>
+              <FontAwesome name="minus-circle" size={30} color="black" />
+            </TouchableOpacity>
+            <Text style={styles.quantityText}>
+              Qntd:
+              {' '}
+              {product.cartQuantity}
+            </Text>
+            <TouchableOpacity onPress={() => handleAddToCart(product)}>
+              <FontAwesome name="plus-circle" size={30} color="black" />
+            </TouchableOpacity>
+          </View>
+
+          <TouchableOpacity onPress={() => handleRemoveFromCart(product)}>
             <FontAwesome name="trash" size={32} color="black" />
           </TouchableOpacity>
         </View>

@@ -4,9 +4,9 @@ import {
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { Text } from './Themed';
-import { addToCart } from '../redux/productsSlice';
+import { addToCart } from '../redux/cartSlice';
 
-interface Product {
+interface StoreCardProps {
   product: {
     title: string,
     price: number,
@@ -15,15 +15,24 @@ interface Product {
     thumbnailHd: string,
     date: string,
   },
-  navigation: any,
 }
 
-export default function StoreCard({ product, navigation }: Product) {
+interface Product {
+  title: string,
+  price: number,
+  zipcode: string,
+  seller: string,
+  thumbnailHd: string,
+  date: string,
+}
+
+export default function StoreCard({ product }: StoreCardProps) {
   const dispatch = useDispatch();
-  const openAlert = () => {
-    // eslint-disable-next-line no-alert
+
+  const handleAddToCart = (item: Product) => {
+    dispatch(addToCart(item));
+
     Alert.alert(`${product.title} adicionado ao carrinho!`);
-    setTimeout(() => navigation.navigate('CartScreen'), 2000);
   };
 
   return (
@@ -46,7 +55,7 @@ export default function StoreCard({ product, navigation }: Product) {
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => { openAlert(); dispatch(addToCart(product.title)); }}
+          onPress={() => handleAddToCart(product)}
         >
           <Text style={styles.buttonText}>COMPRAR</Text>
         </TouchableOpacity>
