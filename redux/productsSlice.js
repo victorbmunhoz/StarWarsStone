@@ -105,6 +105,4 @@ const productsSlice = createSlice({
   // },
 });
 
-export const { setProducts, addToCart } = productsSlice.actions;
-
 export default productsSlice.reducer;
