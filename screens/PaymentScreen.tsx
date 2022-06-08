@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import {
@@ -8,8 +9,15 @@ import {
 } from 'react-native';
 import LottieView from 'lottie-react-native';
 import CreditCardForm, { Button, FormModel } from 'rn-credit-card';
+import { useDispatch, useSelector } from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { removeAll } from '../redux/cartSlice';
 
 export default function PaymentScreen({ navigation }:any) {
+  const { cartItems, cartTotalAmount, cartTotalQuantity } = useSelector((state:any) => state.cart);
+
+  const dispatch = useDispatch();
+
   const formMethods = useForm<FormModel>({
     // to trigger the validation on the blur event
     mode: 'onBlur',
@@ -20,11 +28,41 @@ export default function PaymentScreen({ navigation }:any) {
       cvv: '',
     },
   });
-  const { handleSubmit, formState } = formMethods;
+
+  const storeData = async (value:any) => {
+    AsyncStorage.getItem('purchaseHistory', (result) => {
+      const actualHistory = [result];
+      if (result !== null) {
+        const newPurchase = JSON.parse(value).concat(actualHistory);
+        AsyncStorage.setItem('purchaseHistory', JSON.stringify(newPurchase));
+      } else {
+        console.log('Data Not Found');
+        AsyncStorage.setItem('purchaseHistory', JSON.stringify(actualHistory));
+      }
+    });
+  };
+
+  const { handleSubmit } = formMethods;
 
   function onSubmit(model: FormModel) {
-    console.log(`Success: ${JSON.stringify(model, null, 2)}`);
-    navigation.navigate('Root');
+    const formModel = {
+      purchase: {
+        products: cartItems,
+        totalValue: cartTotalAmount,
+        totalQuantity: cartTotalQuantity,
+        checkoutInfo: {
+          holderName: model.holderName,
+          cardNumber: model.cardNumber,
+          expiration: model.expiration,
+          cvv: model.cvv,
+        },
+      },
+    };
+
+    storeData(formModel);
+
+    dispatch(removeAll());
+    navigation.navigate('StoreList');
   }
 
   return (
@@ -37,8 +75,8 @@ export default function PaymentScreen({ navigation }:any) {
         >
           <CreditCardForm
             fonts={{
-              regular: 'roboto',
-              bold: 'roboto',
+              regular: 'Roboto',
+              bold: 'Roboto',
             }}
             LottieView={LottieView}
             horizontalStart
@@ -49,13 +87,13 @@ export default function PaymentScreen({ navigation }:any) {
             }}
           />
         </KeyboardAvoidingView>
-        {formState.isValid && (
+        {/* {formState.isValid && ( */}
         <Button
           style={styles.button}
           title="CONFIRMAR PAGAMENTO"
           onPress={handleSubmit(onSubmit)}
         />
-        )}
+        {/* )} */}
       </SafeAreaView>
     </FormProvider>
   );

@@ -1,63 +1,78 @@
-import React, { useEffect } from 'react';
+/* eslint-disable consistent-return */
+import React, { useEffect, useState } from 'react';
 import {
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
+  StyleSheet, View, TouchableOpacity, FlatList,
 } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import CartCard from '../components/CartCard';
-import { Text, View } from '../components/Themed';
-import { removeAll, getTotal } from '../redux/cartSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import HistoryCard from '../components/HistoryCard';
+import { Text } from '../components/Themed';
 
-export default function CartScreen({ navigation }:any) {
-  const { cartItems, cartTotalAmount, cartTotalQuantity } = useSelector((state:any) => state.cart);
+interface Purchase {
+    purchase: {
+      products: Product[],
+      totalValue: number,
+      totalQuantity: number,
+      checkoutInfo: {
+        holderName: string,
+        cardNumber: string,
+        expiration: string,
+        cvv: string,
+      }
+    },
+  }
 
-  const dispatch = useDispatch();
+export default function PurchaseHistoryScreen({ navigation }:any) {
+  const [purchaseHistory, setpurchaseHistory] = useState<Purchase[]>([]);
+
+  AsyncStorage.getAllKeys((err, keys) => {
+    AsyncStorage.multiGet(keys, (error, stores) => {
+      stores.map((result, i, store) => {
+        console.log({ [store[i][0]]: store[i][1] });
+        return true;
+      });
+    });
+  });
+
+  const purchaseHistoryFetch = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('purchaseHistory');
+      console.log(jsonValue);
+      if (jsonValue !== null) {
+        setpurchaseHistory(JSON.parse(jsonValue));
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   useEffect(() => {
-    dispatch(getTotal());
-  }, [cartItems, dispatch]);
+    purchaseHistoryFetch();
+  }, []);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Seu carrinho:</Text>
+      <Text style={styles.title}>Seu histórico de compras:</Text>
 
-      {cartItems.length > 0 ? (
+      {!purchaseHistory ? (
         <>
           <Text style={styles.title}>
-            Total de itens:
+            Total de compras:
             {' '}
-            {cartTotalQuantity}
-          </Text>
-
-          <Text style={styles.title}>
-            Valor total: R$
-            {cartTotalAmount}
-            ,00
+            {purchaseHistory.purchase.totalQuantity}
           </Text>
 
           <FlatList
-            data={cartItems}
+            data={purchaseHistory.purchase}
             style={styles.productList}
-            renderItem={({ item }) => <CartCard product={item} key={`${item.zipcode + item.price}`} />}
+            renderItem={({ item }) => <HistoryCard purchase={item} />}
             showsVerticalScrollIndicator={false}
             showsHorizontalScrollIndicator={false}
           />
-
-          {cartItems.length > 1 && (
-            <TouchableOpacity style={styles.buttonRemove} onPress={() => dispatch(removeAll())}>
-              <Text style={styles.buttonBackText}>Remover Todos</Text>
-            </TouchableOpacity>
-          ) }
-
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Pagamento')}>
-            <Text style={styles.buttonText}>FINALIZAR COMPRA</Text>
-          </TouchableOpacity>
         </>
       ) : (
         <>
           <Text style={styles.title}>
-            Você ainda não adicionou nada aqui!
+            Você ainda não comprou nada na nossa loja!
           </Text>
 
           <TouchableOpacity style={styles.buttonBack} onPress={() => navigation.navigate('StoreList')}>
@@ -86,7 +101,6 @@ const styles = StyleSheet.create({
   },
   productList: {
     marginTop: 15,
-    maxHeight: 460,
   },
   button: {
     alignItems: 'center',
@@ -98,7 +112,6 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderStyle: 'dashed',
     borderColor: '#fff',
-    marginBottom: 10,
   },
   buttonText: {
     color: '#000',
@@ -118,11 +131,6 @@ const styles = StyleSheet.create({
   buttonBackText: {
     color: '#fff',
     fontSize: 18,
-  },
-  buttonRemove: {
-    color: '#fff',
-    fontWeight: 'bold',
-    marginTop: 15,
   },
   quantity: {
     flex: 1,
