@@ -1,57 +1,50 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
-  StyleSheet, FlatList, TouchableOpacity,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
 } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import CartCard from '../components/CartCard';
 import { Text, View } from '../components/Themed';
+import { removeAll, getTotal } from '../redux/cartSlice';
 
 export default function CartScreen({ navigation }:any) {
-  const data = [{
-    title: 'Blusa do Imperio',
-    price: 100,
-    zipcode: '78993-000',
-    seller: 'Jo\u00e3o da Silva',
-    thumbnailHd: 'https://cdn.awsli.com.br/600x450/21/21351/produto/3853007/f66e8c63ab.jpg',
-    date: '26/11/2015',
-  },
-  {
-    title: 'Blusa Han Shot First',
-    price: 50,
-    zipcode: '13500-110',
-    seller: 'Joana',
-    thumbnailHd: 'https://cdn.awsli.com.br/1000x1000/21/21351/produto/7234148/55692a941d.jpg',
-    date: '26/11/2015',
-  }];
+  const { cartItems, cartTotalAmount, cartTotalQuantity } = useSelector((state:any) => state.cart);
 
-  const totalValue = data.reduce((a, b) => a + (b.price || 0), 0);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getTotal());
+  }, [cartItems, dispatch]);
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Seu carrinho:</Text>
 
-      {data.length > 0 ? (
+      {cartItems.length > 0 ? (
         <>
           <Text style={styles.title}>
             Total de itens:
             {' '}
-            {data.length}
+            {cartTotalQuantity}
           </Text>
 
           <Text style={styles.title}>
             Valor total: R$
-            {totalValue}
+            {cartTotalAmount}
             ,00
           </Text>
 
           <FlatList
-            data={data}
+            data={cartItems}
             style={styles.productList}
             renderItem={({ item }) => <CartCard product={item} key={`${item.zipcode + item.price}`} />}
             showsVerticalScrollIndicator={false}
             showsHorizontalScrollIndicator={false}
           />
 
-          <TouchableOpacity style={styles.buttonBack} onPress={() => navigation.navigate('StoreList')}>
+          <TouchableOpacity style={styles.buttonBack} onPress={() => dispatch(removeAll())}>
             <Text style={styles.buttonBackText}>Remover Todos</Text>
           </TouchableOpacity>
 
@@ -118,5 +111,16 @@ const styles = StyleSheet.create({
   buttonBackText: {
     color: '#fff',
     fontSize: 18,
+  },
+  quantity: {
+    flex: 1,
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  quantityText: {
+    fontSize: 20,
+    color: '#000',
+    marginHorizontal: 10,
   },
 });

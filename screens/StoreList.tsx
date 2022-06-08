@@ -1,29 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { StyleSheet, FlatList } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Text, View } from '../components/Themed';
 import StoreCard from '../components/StoreCard';
-import { setProducts } from '../redux/productsSlice';
-
-interface Product {
-    title: string,
-    price: number,
-    zipcode: string,
-    seller: string,
-    thumbnailHd: string,
-    date: string,
-}
 
 export default function StoreList({ navigation }:any) {
-  const [products, setProduct] = useState<Product[]>([]);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    fetch('https://raw.githubusercontent.com/stone-pagamentos/desafio-mobile/master/store/products.json')
-      .then((res) => res.json())
-      .then(setProduct);
-    dispatch(setProducts(products));
-  }, []);
+  const { products } = useSelector((state:any) => state.products);
 
   return (
     <View style={styles.container}>

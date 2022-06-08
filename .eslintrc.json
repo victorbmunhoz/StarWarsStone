@@ -24,6 +24,7 @@
         "import/extensions": "off",
         "import/no-unresolved": "off",
         "no-use-before-define": ["off", { "functions": true, "classes": true, "variables": true }],
-        "react/destructuring-assignment": "off"
+        "react/destructuring-assignment": "off",
+        "no-param-reassign": "off"
     }
 }
