@@ -7,67 +7,76 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import HistoryCard from '../components/HistoryCard';
 import { Text } from '../components/Themed';
 
+interface Product {
+  title: string,
+  price: number,
+  zipcode: string,
+  seller: string,
+  thumbnailHd: string,
+  date: string,
+}
+
 interface Purchase {
-    purchase: {
-      products: Product[],
-      totalValue: number,
-      totalQuantity: number,
-      checkoutInfo: {
-        holderName: string,
-        cardNumber: string,
-        expiration: string,
-        cvv: string,
-      }
-    },
+  purchase:{
+    products: Product[],
+    totalValue: number,
+    totalQuantity: number,
+    checkoutInfo: {
+      holderName: string,
+      cardNumber: string,
+      expiration: string,
+      cvv: string,
+    }
   }
+}
 
 export default function PurchaseHistoryScreen({ navigation }:any) {
   const [purchaseHistory, setpurchaseHistory] = useState<Purchase[]>([]);
 
-  AsyncStorage.getAllKeys((err, keys) => {
-    AsyncStorage.multiGet(keys, (error, stores) => {
-      stores.map((result, i, store) => {
-        console.log({ [store[i][0]]: store[i][1] });
-        return true;
-      });
-    });
-  });
-
   const purchaseHistoryFetch = async () => {
     try {
-      const jsonValue = await AsyncStorage.getItem('purchaseHistory');
-      console.log(jsonValue);
-      if (jsonValue !== null) {
-        setpurchaseHistory(JSON.parse(jsonValue));
+      const response = await AsyncStorage.getItem('purchaseHistory');
+      if (response !== null) {
+        setpurchaseHistory(JSON.parse(response));
       }
     } catch (e) {
       console.log(e);
     }
   };
 
+  const restorePurchaseHistory = () => {
+    AsyncStorage.clear();
+  };
+
   useEffect(() => {
     purchaseHistoryFetch();
-  }, []);
+  }, [purchaseHistory]);
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Seu histórico de compras:</Text>
 
-      {!purchaseHistory ? (
+      {purchaseHistory.length > 0 ? (
         <>
           <Text style={styles.title}>
             Total de compras:
             {' '}
-            {purchaseHistory.purchase.totalQuantity}
+            {purchaseHistory.length}
           </Text>
 
           <FlatList
-            data={purchaseHistory.purchase}
+            data={purchaseHistory}
             style={styles.productList}
-            renderItem={({ item }) => <HistoryCard purchase={item} />}
+            renderItem={
+              ({ item }) => <HistoryCard purchase={item.purchase} key={item.purchase.totalValue} />
+            }
             showsVerticalScrollIndicator={false}
             showsHorizontalScrollIndicator={false}
           />
+
+          <TouchableOpacity style={styles.button} onPress={restorePurchaseHistory()}>
+            <Text style={styles.buttonText}>Excluir histórico</Text>
+          </TouchableOpacity>
         </>
       ) : (
         <>

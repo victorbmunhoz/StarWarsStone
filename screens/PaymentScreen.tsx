@@ -1,4 +1,3 @@
-/* eslint-disable global-require */
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import {
@@ -29,16 +28,14 @@ export default function PaymentScreen({ navigation }:any) {
     },
   });
 
-  const storeData = async (value:any) => {
-    AsyncStorage.getItem('purchaseHistory', (result) => {
-      const actualHistory = [result];
-      if (result !== null) {
-        const newPurchase = JSON.parse(value).concat(actualHistory);
-        AsyncStorage.setItem('purchaseHistory', JSON.stringify(newPurchase));
-      } else {
-        console.log('Data Not Found');
-        AsyncStorage.setItem('purchaseHistory', JSON.stringify(actualHistory));
-      }
+  const storeData = (value: any) => {
+    AsyncStorage.getItem('purchaseHistory', (err, result: any) => {
+      const nextHistory = [
+        ...(result || []),
+        value,
+      ];
+
+      AsyncStorage.setItem('purchaseHistory', JSON.stringify(nextHistory));
     });
   };
 

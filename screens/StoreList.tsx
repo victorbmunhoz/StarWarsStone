@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { Text, View } from '../components/Themed';
 import StoreCard from '../components/StoreCard';
 
-export default function StoreList({ navigation }:any) {
+export default function StoreList() {
   const { products } = useSelector((state:any) => state.products);
 
   return (
@@ -14,7 +14,7 @@ export default function StoreList({ navigation }:any) {
       <FlatList
         data={products}
         style={styles.productList}
-        renderItem={({ item, index }) => <StoreCard product={item} navigation={navigation} key={`${item.zipcode}-${index}`} />}
+        renderItem={({ item, index }) => <StoreCard product={item} key={`${item.zipcode}-${index}`} />}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       />

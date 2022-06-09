@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import {
-  StyleSheet, View, TouchableOpacity, FlatList, Image,
+  StyleSheet, View, TouchableOpacity, FlatList, Image, Text,
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
-import { Text } from './Themed';
 
 interface Product {
   title: string,
@@ -16,7 +15,7 @@ interface Product {
 }
 
 interface Purchase {
-  purchase: {
+  purchase:{
     products: Product[],
     totalValue: number,
     totalQuantity: number,
@@ -26,7 +25,7 @@ interface Purchase {
       expiration: string,
       cvv: string,
     }
-  },
+  }
 }
 
 export default function HistoryCard({ purchase }: Purchase) {
@@ -55,13 +54,13 @@ export default function HistoryCard({ purchase }: Purchase) {
           <Text style={styles.title}>
             Total de Itens:
             {' '}
-            {purchase.totalQuantity}
+            { purchase.totalQuantity }
           </Text>
 
           <Text style={styles.title}>
             Nome:
             {'\n'}
-            {purchase.checkoutInfo.holderName}
+            {purchase.checkoutInfo?.holderName}
           </Text>
         </View>
 
@@ -86,19 +85,19 @@ export default function HistoryCard({ purchase }: Purchase) {
             <Text style={styles.title}>
               Número do cartão:
               {'\n'}
-              {purchase.checkoutInfo.cardNumber}
+              {purchase.checkoutInfo?.cardNumber}
             </Text>
 
             <Text style={styles.title}>
               Vencimento do cartão:
               {'\n'}
-              {purchase.checkoutInfo.expiration}
+              {purchase.checkoutInfo?.expiration}
             </Text>
 
             <Text style={styles.title}>
               Código de segurança:
               {'\n'}
-              {purchase.checkoutInfo.cvv}
+              {purchase.checkoutInfo?.cvv}
             </Text>
 
             <Text style={styles.title}>
