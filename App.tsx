@@ -6,7 +6,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
 import cartSlice, { getTotal } from './redux/cartSlice';
-import productsSlice from './redux/productsSlice';
+import productsSlice, { productFetch } from './redux/productsSlice';
 
 const store = configureStore({
   reducer: {
@@ -15,17 +15,15 @@ const store = configureStore({
   },
 });
 
-// store.dispatch(productFetch());
+store.dispatch(productFetch());
 
 store.dispatch(getTotal());
 
 export default function App() {
-  const colorScheme = useColorScheme();
-
   return (
     <Provider store={store}>
       <SafeAreaProvider>
-        <Navigation colorScheme={colorScheme} />
+        <Navigation colorScheme="dark" />
         <StatusBar />
       </SafeAreaProvider>
     </Provider>
