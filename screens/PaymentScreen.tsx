@@ -42,7 +42,7 @@ export default function PaymentScreen({ navigation }:any) {
     });
   };
 
-  const { handleSubmit } = formMethods;
+  const { handleSubmit, formState } = formMethods;
 
   function onSubmit(model: FormModel) {
     const formModel = {
@@ -62,6 +62,7 @@ export default function PaymentScreen({ navigation }:any) {
     storeData(formModel);
 
     dispatch(removeAll());
+
     navigation.navigate('StoreList');
   }
 
@@ -87,13 +88,14 @@ export default function PaymentScreen({ navigation }:any) {
             }}
           />
         </KeyboardAvoidingView>
-        {/* {formState.isValid && ( */}
-        <Button
-          style={styles.button}
-          title="CONFIRMAR PAGAMENTO"
-          onPress={handleSubmit(onSubmit)}
-        />
-        {/* )} */}
+
+        {formState.isValid && (
+          <Button
+            style={styles.button}
+            title="CONFIRMAR PAGAMENTO"
+            onPress={handleSubmit(onSubmit)}
+          />
+        )}
       </SafeAreaView>
     </FormProvider>
   );
