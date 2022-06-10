@@ -8,7 +8,6 @@
 
 <h1>
     <p align="center">
-        <a href="#objetivo">Objetivo</a> •
         <a href="#tecnologias">Tecnologias</a> •  
         <a href="#autor">Autor</a>
     </p>
@@ -32,6 +31,7 @@ As seguintes ferramentas foram usadas na construção do projeto:
 
 - [Expo](https://expo.io/)
 - [Node.js](https://nodejs.org/en/)
-- [React](https://pt-br.reactjs.org/)
 - [React Native](https://reactnative.dev/)
 - [TypeScript](https://www.typescriptlang.org/)
+- [@Redux/toolkit](https://redux-toolkit.js.org/)
+- [ESLint](https://eslint.org/)
