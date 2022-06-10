@@ -3,30 +3,7 @@ import {
   StyleSheet, View, TouchableOpacity, FlatList, Image, Text,
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
-
-interface Product {
-  title: string,
-  price: number,
-  zipcode: string,
-  seller: string,
-  thumbnailHd: string,
-  date: string,
-  cartQuantity: number,
-}
-
-interface Purchase {
-  purchase:{
-    products: Product[],
-    totalValue: number,
-    totalQuantity: number,
-    checkoutInfo: {
-      holderName: string,
-      cardNumber: string,
-      expiration: string,
-      cvv: string,
-    }
-  }
-}
+import { Purchase } from '../types';
 
 export default function HistoryCard({ purchase }: Purchase) {
   const [open, setOpen] = useState<boolean>(false);
@@ -47,8 +24,9 @@ export default function HistoryCard({ purchase }: Purchase) {
           <Text style={styles.title}>
             Valor total:
             {' '}
+            R$
             {purchase.totalValue}
-
+            ,00
           </Text>
 
           <Text style={styles.title}>
@@ -85,19 +63,19 @@ export default function HistoryCard({ purchase }: Purchase) {
             <Text style={styles.title}>
               Número do cartão:
               {'\n'}
-              {purchase.checkoutInfo?.cardNumber}
+              {purchase.checkoutInfo.cardNumber}
             </Text>
 
             <Text style={styles.title}>
               Vencimento do cartão:
               {'\n'}
-              {purchase.checkoutInfo?.expiration}
+              {purchase.checkoutInfo.expiration}
             </Text>
 
             <Text style={styles.title}>
               Código de segurança:
               {'\n'}
-              {purchase.checkoutInfo?.cvv}
+              {purchase.checkoutInfo.cvv}
             </Text>
 
             <Text style={styles.title}>

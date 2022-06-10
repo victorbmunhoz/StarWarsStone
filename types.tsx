@@ -18,7 +18,7 @@ declare global {
 }
 
 export type RootTabParamList = {
-  StoreList: undefined;
+  StoreScreen: undefined;
   CartScreen: undefined;
   PurchaseHistoryScreen: undefined;
 };
@@ -32,3 +32,53 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> = Composit
   BottomTabScreenProps<RootTabParamList, Screen>,
   NativeStackScreenProps<RootStackParamList>
 >;
+
+// Object Types
+
+export type Product = {
+  title: string,
+  price: number,
+  zipcode: string,
+  seller: string,
+  thumbnailHd: string,
+  date: string,
+  cartQuantity?: number
+}
+
+export type Purchase = {
+  purchase:{
+    products: Product[],
+    totalValue: number,
+    totalQuantity: number,
+    checkoutInfo: {
+      holderName: string,
+      cardNumber: string,
+      expiration: string,
+      cvv: string,
+    }
+  }
+}
+
+export type CartCardProps = {
+  product: {
+    title: string,
+    price: number,
+    zipcode: string,
+    seller: string,
+    thumbnailHd: string,
+    date: string,
+    cartQuantity: number,
+  }
+}
+
+export type StoreCardProps = {
+  product: {
+    title: string,
+    price: number,
+    zipcode: string,
+    seller: string,
+    thumbnailHd: string,
+    date: string,
+    cartQuantity?: number,
+  },
+}

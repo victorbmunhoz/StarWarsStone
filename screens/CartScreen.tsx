@@ -60,7 +60,7 @@ export default function CartScreen({ navigation }:any) {
             Você ainda não adicionou nada aqui!
           </Text>
 
-          <TouchableOpacity style={styles.buttonBack} onPress={() => navigation.navigate('StoreList')}>
+          <TouchableOpacity style={styles.buttonBack} onPress={() => navigation.navigate('StoreScreen')}>
             <Text style={styles.buttonText}>VOLTAR PARA A LOJA</Text>
           </TouchableOpacity>
         </>
@@ -77,12 +77,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     paddingHorizontal: 15,
+    backgroundColor: '#000',
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
     textAlign: 'center',
     marginTop: 15,
+    color: '#fff',
   },
   productList: {
     marginTop: 15,

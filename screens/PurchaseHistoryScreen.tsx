@@ -1,34 +1,11 @@
-/* eslint-disable consistent-return */
 import React, { useEffect, useState } from 'react';
 import {
-  StyleSheet, View, TouchableOpacity, FlatList,
+  StyleSheet, View, TouchableOpacity, FlatList, Alert, DevSettings,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import HistoryCard from '../components/HistoryCard';
 import { Text } from '../components/Themed';
-
-interface Product {
-  title: string,
-  price: number,
-  zipcode: string,
-  seller: string,
-  thumbnailHd: string,
-  date: string,
-}
-
-interface Purchase {
-  purchase:{
-    products: Product[],
-    totalValue: number,
-    totalQuantity: number,
-    checkoutInfo: {
-      holderName: string,
-      cardNumber: string,
-      expiration: string,
-      cvv: string,
-    }
-  }
-}
+import { Purchase } from '../types';
 
 export default function PurchaseHistoryScreen({ navigation }:any) {
   const [purchaseHistory, setpurchaseHistory] = useState<Purchase[]>([]);
@@ -40,17 +17,26 @@ export default function PurchaseHistoryScreen({ navigation }:any) {
         setpurchaseHistory(JSON.parse(response));
       }
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 
-  const restorePurchaseHistory = () => {
-    AsyncStorage.clear();
+  const restorePurchaseHistory = async () => {
+    try {
+      await AsyncStorage.clear();
+      Alert.alert('Histórico deletado com sucesso');
+
+      navigation.navigate('StoreScreen');
+
+      DevSettings.reload();
+    } catch (e) {
+      Alert.alert('Houve algum problema');
+    }
   };
 
   useEffect(() => {
     purchaseHistoryFetch();
-  }, [purchaseHistory]);
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -74,7 +60,7 @@ export default function PurchaseHistoryScreen({ navigation }:any) {
             showsHorizontalScrollIndicator={false}
           />
 
-          <TouchableOpacity style={styles.button} onPress={restorePurchaseHistory()}>
+          <TouchableOpacity style={styles.button} onPress={() => restorePurchaseHistory()}>
             <Text style={styles.buttonText}>Excluir histórico</Text>
           </TouchableOpacity>
         </>
@@ -84,7 +70,7 @@ export default function PurchaseHistoryScreen({ navigation }:any) {
             Você ainda não comprou nada na nossa loja!
           </Text>
 
-          <TouchableOpacity style={styles.buttonBack} onPress={() => navigation.navigate('StoreList')}>
+          <TouchableOpacity style={styles.buttonBack} onPress={() => navigation.navigate('StoreScreen')}>
             <Text style={styles.buttonText}>VOLTAR PARA A LOJA</Text>
           </TouchableOpacity>
         </>
@@ -101,12 +87,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     paddingHorizontal: 15,
+    backgroundColor: '#000',
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
     textAlign: 'center',
     marginTop: 15,
+    color: '#fff',
   },
   productList: {
     marginTop: 15,

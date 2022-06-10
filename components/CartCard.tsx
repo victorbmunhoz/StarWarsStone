@@ -6,27 +6,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { useDispatch } from 'react-redux';
 import { Text } from './Themed';
 import { addToCart, removeFromCart, decreaseCart } from '../redux/cartSlice';
-
-interface CartCardProps {
-  product: {
-    title: string,
-    price: number,
-    zipcode: string,
-    seller: string,
-    thumbnailHd: string,
-    date: string,
-    cartQuantity: number,
-  }
-}
-
-interface Product {
-  title: string,
-  price: number,
-  zipcode: string,
-  seller: string,
-  thumbnailHd: string,
-  date: string,
-}
+import { CartCardProps, Product } from '../types';
 
 export default function CartCard({ product }: CartCardProps) {
   const dispatch = useDispatch();

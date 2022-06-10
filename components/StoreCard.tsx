@@ -5,26 +5,7 @@ import {
 import { useDispatch } from 'react-redux';
 import { Text } from './Themed';
 import { addToCart } from '../redux/cartSlice';
-
-interface StoreCardProps {
-  product: {
-    title: string,
-    price: number,
-    zipcode: string,
-    seller: string,
-    thumbnailHd: string,
-    date: string,
-  },
-}
-
-interface Product {
-  title: string,
-  price: number,
-  zipcode: string,
-  seller: string,
-  thumbnailHd: string,
-  date: string,
-}
+import { Product, StoreCardProps } from '../types';
 
 export default function StoreCard({ product }: StoreCardProps) {
   const dispatch = useDispatch();

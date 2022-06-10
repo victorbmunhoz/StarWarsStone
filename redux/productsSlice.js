@@ -33,6 +33,7 @@ const productsSlice = createSlice({
     },
     [productFetch.fulfilled]: (state, action) => {
       state.products.push(...action.payload);
+      state.loading = false;
     },
     [productFetch.rejected]: (state) => {
       state.loading = false;

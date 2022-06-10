@@ -5,12 +5,14 @@ import {
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
+  DevSettings,
 } from 'react-native';
 import LottieView from 'lottie-react-native';
 import CreditCardForm, { Button, FormModel } from 'rn-credit-card';
 import { useDispatch, useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { removeAll } from '../redux/cartSlice';
+import { Purchase } from '../types';
 
 export default function PaymentScreen({ navigation }:any) {
   const { cartItems, cartTotalAmount, cartTotalQuantity } = useSelector((state:any) => state.cart);
@@ -28,15 +30,21 @@ export default function PaymentScreen({ navigation }:any) {
     },
   });
 
-  const storeData = (value: any) => {
-    AsyncStorage.getItem('purchaseHistory', (err, result: any) => {
-      const nextHistory = [
-        ...(result || []),
-        value,
-      ];
+  const storeData = async (value: Purchase) => {
+    try {
+      await AsyncStorage.getItem('purchaseHistory', (err, result: any) => {
+        const nextHistory = [
+          ...(result || []),
+          value,
+        ];
 
-      AsyncStorage.setItem('purchaseHistory', JSON.stringify(nextHistory));
-    });
+        AsyncStorage.setItem('purchaseHistory', JSON.stringify(nextHistory));
+
+        DevSettings.reload();
+      });
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const { handleSubmit, formState } = formMethods;
@@ -60,11 +68,10 @@ export default function PaymentScreen({ navigation }:any) {
 
     dispatch(removeAll());
 
-    navigation.navigate('StoreList');
+    navigation.navigate('StoreScreen');
   }
 
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
     <FormProvider {...formMethods}>
       <SafeAreaView style={styles.container}>
         <KeyboardAvoidingView
