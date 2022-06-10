@@ -29,6 +29,6 @@ As seguintes ferramentas foram usadas na construção do projeto:
 
 Feito com ❤️ por Victor Munhoz
 
-[![Linkedin Badge](https://img.shields.io/badge/-Victor-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/victor-munhoz/)](https://www.linkedin.com/in/tgmarinho/) 
+[![Linkedin Badge](https://img.shields.io/badge/-Victor-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/victor-munhoz/)](https://www.linkedin.com/in/victor-munhoz/) 
 
 [![Gmail Badge](https://img.shields.io/badge/-vbm2906@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:vbm2906@gmail.com)](mailto:vbm2906@gmail.com)
