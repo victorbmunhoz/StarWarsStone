@@ -17,10 +17,10 @@ Além disto é bom ter um editor para trabalhar com o código como [VSCode](http
 As seguintes ferramentas foram usadas na construção do projeto:
 
 - [Expo](https://expo.io/)
-- [Node.js](https://nodejs.org/en/)
 - [React Native](https://reactnative.dev/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [@Redux/toolkit](https://redux-toolkit.js.org/)
+- [Node.js](https://nodejs.org/en/)
 - [ESLint](https://eslint.org/)
 
 ---
