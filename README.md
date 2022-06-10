@@ -25,3 +25,13 @@ Além disto é bom ter um editor para trabalhar com o código como [VSCode](http
 <h1 align="center" id="#objetivo">
     <p align="center">🚀 Projeto para o desafio da Stone!</p>
 </h1>
+
+### 🛠 Tecnologias
+
+As seguintes ferramentas foram usadas na construção do projeto:
+
+- [Expo](https://expo.io/)
+- [Node.js](https://nodejs.org/en/)
+- [React](https://pt-br.reactjs.org/)
+- [React Native](https://reactnative.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
