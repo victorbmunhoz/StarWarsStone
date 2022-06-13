@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  StyleSheet, View, TouchableOpacity, FlatList, Alert, DevSettings,
+  StyleSheet, View, TouchableOpacity, FlatList, Alert,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import HistoryCard from '../components/HistoryCard';
@@ -15,28 +15,14 @@ export default function PurchaseHistoryScreen({ navigation }:any) {
       const response = await AsyncStorage.getItem('purchaseHistory');
       if (response !== null) {
         setpurchaseHistory(JSON.parse(response));
-        console.log(JSON.parse(response));
       }
     } catch (e) {
       console.error(e);
     }
   };
 
-  const restorePurchaseHistory = async () => {
-    try {
-      await AsyncStorage.clear();
-      Alert.alert('Histórico deletado com sucesso');
-
-      navigation.navigate('StoreScreen');
-
-      DevSettings.reload();
-    } catch (e) {
-      Alert.alert('Houve algum problema');
-    }
-  };
-
   useEffect(() => {
-    purchaseHistoryFetch();
+    navigation.addListener('focus', () => purchaseHistoryFetch());
   }, []);
 
   return (

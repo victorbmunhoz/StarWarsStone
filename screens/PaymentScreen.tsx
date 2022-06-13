@@ -38,8 +38,6 @@ export default function PaymentScreen({ navigation }:any) {
       ];
 
       AsyncStorage.setItem('purchaseHistory', JSON.stringify(nextHistory));
-
-      DevSettings.reload();
     });
   };
 
@@ -85,6 +83,20 @@ export default function PaymentScreen({ navigation }:any) {
               labelText: {
                 marginTop: 16,
               },
+            }}
+            translations={{
+              cardNumber: 'Número do cartão',
+              cardHolderName: 'Nome do titular',
+              mmYY: 'MM/YY',
+              expiration: 'Data de expiração',
+              securityCode: 'Código (CVV)',
+              next: 'Próximo',
+              done: 'Concluído',
+              cardNumberRequired: 'Número do cartão é obrigatório.',
+              cardNumberInvalid: 'Número do cartão é inválido.',
+              cardHolderNameRequired: 'Nome do titular é obrigatório.',
+              expirationRequired: 'Data de expiração é obrigatório.',
+              securityCodeRequired: 'Código de segurança é obrigatório',
             }}
           />
         </KeyboardAvoidingView>
