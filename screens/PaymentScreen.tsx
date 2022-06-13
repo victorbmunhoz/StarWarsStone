@@ -33,7 +33,7 @@ export default function PaymentScreen({ navigation }:any) {
   const storeData = async (value: Purchase) => {
     await AsyncStorage.getItem('purchaseHistory', (err, result: any) => {
       const nextHistory = [
-        ...JSON.parse(result || []),
+        ...JSON.parse(result || '[]'),
         value,
       ];
 
