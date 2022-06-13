@@ -39,7 +39,8 @@ export default function CartScreen({ navigation }:any) {
           <FlatList
             data={cartItems}
             style={styles.productList}
-            renderItem={({ item }) => <CartCard product={item} key={`${item.zipcode + item.price}`} />}
+            renderItem={({ item }) => <CartCard product={item} />}
+            keyExtractor={(item, index) => (item.price * index).toString()}
             showsVerticalScrollIndicator={false}
             showsHorizontalScrollIndicator={false}
           />

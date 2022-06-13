@@ -15,6 +15,7 @@ export default function PurchaseHistoryScreen({ navigation }:any) {
       const response = await AsyncStorage.getItem('purchaseHistory');
       if (response !== null) {
         setpurchaseHistory(JSON.parse(response));
+        console.log(JSON.parse(response));
       }
     } catch (e) {
       console.error(e);
@@ -54,8 +55,9 @@ export default function PurchaseHistoryScreen({ navigation }:any) {
             data={purchaseHistory}
             style={styles.productList}
             renderItem={
-              ({ item }) => <HistoryCard purchase={item.purchase} key={item.purchase.totalValue} />
+              ({ item }) => <HistoryCard purchase={item.purchase} />
             }
+            keyExtractor={(item, index) => (item.purchase.totalValue * index).toString()}
             showsVerticalScrollIndicator={false}
             showsHorizontalScrollIndicator={false}
           />

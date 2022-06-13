@@ -31,20 +31,16 @@ export default function PaymentScreen({ navigation }:any) {
   });
 
   const storeData = async (value: Purchase) => {
-    try {
-      await AsyncStorage.getItem('purchaseHistory', (err, result: any) => {
-        const nextHistory = [
-          ...(result || []),
-          value,
-        ];
+    await AsyncStorage.getItem('purchaseHistory', (err, result: any) => {
+      const nextHistory = [
+        ...JSON.parse(result || []),
+        value,
+      ];
 
-        AsyncStorage.setItem('purchaseHistory', JSON.stringify(nextHistory));
+      AsyncStorage.setItem('purchaseHistory', JSON.stringify(nextHistory));
 
-        DevSettings.reload();
-      });
-    } catch (err) {
-      console.error(err);
-    }
+      DevSettings.reload();
+    });
   };
 
   const { handleSubmit, formState } = formMethods;
