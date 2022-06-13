@@ -47,10 +47,6 @@ export default function PurchaseHistoryScreen({ navigation }:any) {
             showsVerticalScrollIndicator={false}
             showsHorizontalScrollIndicator={false}
           />
-
-          <TouchableOpacity style={styles.button} onPress={() => restorePurchaseHistory()}>
-            <Text style={styles.buttonText}>Excluir histórico</Text>
-          </TouchableOpacity>
         </>
       ) : (
         <>
