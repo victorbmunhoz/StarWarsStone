@@ -87,6 +87,7 @@ export default function PaymentScreen({ navigation }:any) {
             translations={{
               cardNumber: 'Número do cartão',
               cardHolderName: 'Nome do titular',
+              nameSurname: 'Nome Sobrenome',
               mmYY: 'MM/YY',
               expiration: 'Data de expiração',
               securityCode: 'Código (CVV)',
