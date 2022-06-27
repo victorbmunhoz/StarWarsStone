@@ -1,9 +1,5 @@
 <h1 align="center">Star Wars Stone</h1>
 
-<h1 align="center" id="#objetivo">
-    <p align="center">🚀 Projeto para o desafio da Stone!</p>
-</h1>
-
 ### Pré-requisitos
 
 Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
